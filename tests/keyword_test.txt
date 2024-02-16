@@ -1,0 +1,1 @@
+integer string double character boolean float array dictionary return for if elif else while 

@@ -1,0 +1,9 @@
+for(integer i = 0; i < 10; i+1){
+    return i;
+}
+
+string = "test";
+
+while(i > 10){
+    i+1;
+}

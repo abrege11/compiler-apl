@@ -1,0 +1,4 @@
+integer i = 10;
+// this is a comment;
+boolean t = True;
+string s = "test";

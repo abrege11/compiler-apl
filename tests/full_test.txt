@@ -1,0 +1,16 @@
+integer int = 10;
+string str = "this is a string"
+boolean bool = True;
+
+if(t == True){
+    return False;
+    i = i + i;
+}
+
+array arr = [1, 2, 3, 4];
+
+
+while(i < 30){
+    i + 1;
+    print("test pr");
+}

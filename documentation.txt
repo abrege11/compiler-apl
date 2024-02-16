@@ -1,0 +1,148 @@
+Documentation
+
+1.00 - All valid inputs
+    Types:
+        integer, double, boolean, string, character, array
+    Operators:
+        +, -, *, /, %, &&, ||, !, =, !=, ==, <, <=, >, >=
+    Misc:
+        //, ;
+    Statments/Loops:
+        if, elif, else, while, for, return, print()
+
+
+
+1.01 - Declarations:
+    <type> <var> = <val>;
+    integer i = 1;
+    double d = 1.1;
+    boolean b = True; | False;
+    string s = "this is a string";
+    character c = 'c';
+    array arr = [val1, val2, val3];
+
+
+1.02 - Token Types:
+    Identifier:
+        variable names, function names
+    Keyword:
+        keywords with special function in langauge (for, if, while)
+    Numeric Literal:
+        numeric values (ints, doubles)
+    String Literal:
+        data enclosed in quoates ""
+    Boolean Literal:
+        True or False
+    Character Literal:
+        single characters ('a', 'b', '1', '2')
+    Operators:
+        Arithmetic:
+            addition: +
+            subtraction: -
+            division: /
+            multiplication: *
+            modulus: %
+        Rational:
+            less than: <
+            less than or equal to: <=
+            greater than: >
+            greater than or equal to: >=
+            equal to: ==
+            not equal to: != 
+        Assignment:
+            assign to: = 
+        Logical:
+            logical and: &&
+            logical or: ||
+            logical not: !
+    Punctuation:
+        commas (,) and semicolons (;)
+    Comments:
+        anything after //
+    Whitespace:
+        spaces, tabs, newlines
+    EOF:
+        indication of end of source file
+
+
+
+1.03 :
+    <program> ::= <statement_list>
+
+    <statement_list> ::= <statement> <statement_list>
+
+    <statement> ::= <declaration>
+                | <assignment>
+                | <if_statement>
+                | <while_loop>
+                | <for_loop>
+                | <return_statement>
+                | <print_statement>
+                | ';'
+
+    <declaration> ::= <type> <identifier> '=' <expression> ';'
+
+    <assignment> ::= <identifier> '=' <expression> ';'
+
+    <if_statement> ::= 'if' '(' <expression> ')' '{' <statement_list> '}' 
+                | 'if' '(' <expression> ')' '{' <statement_list> '}' 'else' '{' <statement_list> '}'
+                | 'if' '(' <expression> ')' '{' <statement_list> '}' 'elif' '(' <expression> ')' '{' <statement_list> '}'
+
+    <while_loop> ::= 'while' '(' <expression> ')' '{' <statement_list> '}'
+
+    <for_loop> ::= 'for' '(' <declaration> ';' <expression> ';' <assignment> ')' '{' <statement_list> '}'
+
+    <return_statement> ::= 'return' <expression> ';'
+
+    <print_statement> ::= 'print' '(' <expression> ')' ';'
+
+    <expression> ::= <logical_or>
+
+    <logical_or> ::= <logical_and> ('||' <logical_and>)*
+
+    <logical_and> ::= <equality> ('&&' <equality>)*
+
+    <equality> ::= <relational> (('==' | '!=') <relational>)*
+
+    <relational> ::= <additive> (('>' | '<' | '>=' | '<=') <additive>)*
+
+    <additive> ::= <multiplicative> (('+' | '-') <multiplicative>)*
+
+    <multiplicative> ::= <unary> (('*' | '/' | '%') <unary>)*
+
+    <unary> ::= ('+' | '-' | '!') <primary>
+
+    <primary> ::= <identifier>
+            | <numeric_literal>
+            | <string_literal>
+            | <boolean_literal>
+            | <character_literal>
+            | '(' <expression> ')'
+            | <array_literal>
+
+    <array_literal> ::= '[' <expression> (',' <expression>)* ']'
+
+    <type> ::= 'integer' | 'double' | 'boolean' | 'string' | 'character' | 'array'
+
+    <identifier> ::= <letter> (<letter> | <digit>)*
+
+    <numeric_literal> ::= <integer_literal> | <double_literal>
+
+    <integer_literal> ::= <digit>+
+
+    <double_literal> ::= <digit>+ '.' <digit>+
+
+    <string_literal> ::= '"' <any_character>* '"'
+
+    <boolean_literal> ::= 'True' | 'False'
+
+    <any_character> ::= <letter> | <digit> | <special_character>
+
+    <letter> ::= 'a' | 'b' | ... | 'z' | 'A' | 'B' | ... | 'Z'
+
+    <digit> ::= '0' | '1' | ... | '9'
+
+    <special_character> ::= any printable ASCII character except letters and digits
+
+
+

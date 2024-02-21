@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <unordered_map>
 
 std::vector<std::string> keywords = {"integer", "string", "double", "character", "boolean", "float", "array", "dictionary", "return", "for", "if", "elif", "else", "while", "print"};
 std::vector<std::string> booleans = {"True", "False"};
@@ -15,6 +16,7 @@ std::vector<std::string> misc = {";", "//", ","};
 std::vector<std::string> keyword_statements = {"if", "elif", "else", "for", "while", "print"};
 std::vector<char> valid_parenthesis = {'(', ')', '{', '}', '[', ']'};
 
+
 //token class, these will be generated to store in the parse tree 
 class Token{
     std::string type;
@@ -22,6 +24,10 @@ class Token{
     public:
     Token() : type(""), val("") {}
     Token(std::string type, std::string val) : type(type), val(val){}
+
+    std::string get_type(){
+        return type;
+    }
 
     std::string get_val(){
         return val;
@@ -35,6 +41,23 @@ class Token{
 
 //map that will store the tokens for the parser to use
 std::vector<Token> Tokens;
+
+class Symbol{
+    std::string type;
+    std::string scope;
+    std::string value;
+
+    public:
+    Symbol() : type(""), scope(""), value("") {}
+    Symbol(std::string type, std::string scope, std::string value) : type(type), scope(scope), value(value){}
+
+    friend std::ostream& operator<< (std::ostream& stream, const Symbol& sym){
+        stream << "Type: " << sym.type << " | Scope: " << sym.scope << " | Value: " << sym.value << std::endl;
+        return stream;
+    }
+};
+
+std::unordered_map<std::string, Symbol> sym_table;
 
 //this is a helper funciton to check if the buff is containing a keyword
 bool is_keyword(std::string _keyword){
@@ -130,6 +153,10 @@ std::string get_parenthesis_type(std::string _c){
     }
 }
 
+void reset(){
+    Tokens.clear();
+    sym_table.clear();
+}
 
 //this is the main scan function
 //this function will turn every item in the file into a token
@@ -275,13 +302,59 @@ void scan(std::string text){
     }
 }
 
+//function to make our symbol table
+void init_sym(){
+    for(int i = 0; i < Tokens.size(); i++){
+        if(Tokens[i].get_type() == "Keyword" && Tokens[i+2].get_type() == "Assignment Operator"){
+            sym_table[Tokens[i+1].get_val()] = Symbol(Tokens[i].get_val(), "main", Tokens[i+3].get_val());
+        }
+    }
+}
+
+void tester(){
+    //std::vector<std::string> tests = {"full_test.txt", "if_statement_test.txt"};
+    std::vector<std::string> tests = {"array_test.txt", "full_test.txt", "if_statement_test.txt", "keyword_test.txt", "loop_test.txt", "print_test.txt", "program.txt"};
+    for(int i = 0; i < tests.size(); i++){
+        std::cout << std::endl << "-----------------------THIS IS TEST " << i+1 << ": " << tests[i] << "-----------------------" << std::endl;
+        std::string path = "tests/";
+        std::string test = tests[i];
+        scan(path + test);
+
+        //print out the contents of the map to make sure eveything is lexed
+        for (int i = 0; i < Tokens.size(); i++) {
+            std::cout << Tokens[i];
+        }
+
+        init_sym();
+
+        std::cout << std::endl << "------------Symbol Table------------" << std::endl << std::endl;
+
+        for (auto i = sym_table.begin(); i != sym_table.end(); i++) {
+            std::cout << i->first << " : "<< i->second;
+        }
+        reset();
+    }
+
+}
 
 
 int main(){
-    scan("tests/full_test.txt");
+    // std::string test = "full_test.txt";
+    // scan(test);
+
+    tester();
 
     //print out the contents of the map to make sure eveything is lexed
-    for (int i = 0; i < Tokens.size(); i++) {
-        std::cout << Tokens[i] << std::endl;
-    }
+
+    // for (int i = 0; i < Tokens.size(); i++) {
+    //     std::cout << Tokens[i] << std::endl;
+    // }
+
+    // init_sym();
+
+    // std::cout << std::endl << "------------Symbol Table------------" << std::endl << std::endl;
+
+    // for (auto i = sym_table.begin(); i != sym_table.end(); i++) {
+    //     std::cout << i->first << " : "<< i->second << std::endl;
+    // }
 }

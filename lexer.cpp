@@ -46,13 +46,16 @@ class Symbol{
     std::string type;
     std::string scope;
     std::string value;
+    int lineOfDeclaration;
+    // TODO 
+    // std::vector<int> linesOfUse;
 
     public:
     Symbol() : type(""), scope(""), value("") {}
-    Symbol(std::string type, std::string scope, std::string value) : type(type), scope(scope), value(value){}
+    Symbol(std::string type, std::string scope, std::string value, int lineOfDeclaration) : type(type), scope(scope), value(value), lineOfDeclaration(lineOfDeclaration){}
 
     friend std::ostream& operator<< (std::ostream& stream, const Symbol& sym){
-        stream << "Type: " << sym.type << " | Scope: " << sym.scope << " | Value: " << sym.value << std::endl;
+        stream << "Type: " << sym.type << " | Scope: " << sym.scope << " | Value: " << sym.value << " | Line Of Declaration: " << sym.lineOfDeclaration << std::endl;
         return stream;
     }
 };
@@ -100,6 +103,8 @@ std::string operator_type(std::string _operator){
         return "Rational Operator";
     } else if(std::count(logical_operators.begin(), logical_operators.end(), _operator)){
         return "Logical Operator";
+    } else {
+        return "";
     }
 }
 
@@ -166,6 +171,8 @@ void scan(std::string text){
     std::string buff;
     std::string type;
     std::string potential_operator;
+    int lineNum;
+    std::string carriage = "\n";
 
     std::ifstream in(text);
     //ensure the file exists
@@ -173,8 +180,15 @@ void scan(std::string text){
         std::cout << "file does not exist" << std::endl;
         exit(1);
     }
+    //start our line at 0
+    lineNum = 0;
     //loop through character by character, including spaces
     while(in >> std::noskipws >> c){
+        //check if we are at a newline, this is used to store the line count
+        if(std::string(1, c) == carriage || in.eof()){
+            lineNum++;
+            std::cout << "LINENUMBER: " << lineNum << std::endl;
+        }
         //checks if we found a statement, in which we have to lex differently
         if(is_keystatement(buff) && is_parenthesis(c)){
             Tokens.push_back(Token("Statement", buff));
@@ -306,7 +320,7 @@ void scan(std::string text){
 void init_sym(){
     for(int i = 0; i < Tokens.size(); i++){
         if(Tokens[i].get_type() == "Keyword" && Tokens[i+2].get_type() == "Assignment Operator"){
-            sym_table[Tokens[i+1].get_val()] = Symbol(Tokens[i].get_val(), "main", Tokens[i+3].get_val());
+            sym_table[Tokens[i+1].get_val()] = Symbol(Tokens[i].get_val(), "main", Tokens[i+3].get_val(), 0);
         }
     }
 }

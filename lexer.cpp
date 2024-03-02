@@ -21,9 +21,10 @@ std::vector<char> valid_parenthesis = {'(', ')', '{', '}', '[', ']'};
 class Token{
     std::string type;
     std::string val;
+    int lineNum;
     public:
-    Token() : type(""), val("") {}
-    Token(std::string type, std::string val) : type(type), val(val){}
+    Token() : type(""), val(""), lineNum() {}
+    Token(std::string type, std::string val, int lineNum) : type(type), val(val), lineNum(lineNum){}
 
     std::string get_type(){
         return type;
@@ -31,6 +32,10 @@ class Token{
 
     std::string get_val(){
         return val;
+    }
+
+    int get_lineNum(){
+        return lineNum;
     }
 
     friend std::ostream& operator<< (std::ostream& stream, const Token& token){
@@ -180,26 +185,26 @@ void scan(std::string text){
         std::cout << "file does not exist" << std::endl;
         exit(1);
     }
-    //start our line at 0
-    lineNum = 0;
+    //start our line at 1
+    lineNum = 1;
     //loop through character by character, including spaces
     while(in >> std::noskipws >> c){
         //check if we are at a newline, this is used to store the line count
-        if(std::string(1, c) == carriage || in.eof()){
-            lineNum++;
+        if(std::string(1, c) == carriage || in.peek() && in.eof()){
             std::cout << "LINENUMBER: " << lineNum << std::endl;
+            lineNum++;
         }
         //checks if we found a statement, in which we have to lex differently
         if(is_keystatement(buff) && is_parenthesis(c)){
-            Tokens.push_back(Token("Statement", buff));
-            Tokens.push_back(Token(get_parenthesis_type(std::string(1, c)), std::string(1, c)));
+            Tokens.push_back(Token("Statement", buff, lineNum));
+            Tokens.push_back(Token(get_parenthesis_type(std::string(1, c)), std::string(1, c), lineNum));
             buff.clear();
             continue;
         }
         //checks if we found a keyword, if the keyword is complete and there is a space in the next
         //in, we know that it is a complete keyword and not an identifier
         if(is_keyword(buff) && isspace(c)){
-            Tokens.push_back(Token("Keyword", buff));
+            Tokens.push_back(Token("Keyword", buff, lineNum));
             buff.clear();
             continue;
         }
@@ -208,15 +213,15 @@ void scan(std::string text){
         //an identifier if it passes the is_identifier check function
         else if(isspace(c) || is_operator(std::string(1, c)) && !buff.empty() || !buff.empty() && is_parenthesis(c)){
             if(is_identifier(buff) && is_operator(std::string(1, c))){
-                Tokens.push_back(Token("Identifier", buff));
+                Tokens.push_back(Token("Identifier", buff, lineNum));
                 buff.clear();
             } else if(is_identifier(buff) && c == ')'){
-                Tokens.push_back(Token("Identifier", buff));
-                Tokens.push_back(Token(get_parenthesis_type(std::string(1, c)), std::string(1, c)));
+                Tokens.push_back(Token("Identifier", buff, lineNum));
+                Tokens.push_back(Token(get_parenthesis_type(std::string(1, c)), std::string(1, c), lineNum));
                 buff.clear();
                 continue;
             } else if(is_identifier(buff) && buff != ""){
-                Tokens.push_back(Token("Identifier", buff));
+                Tokens.push_back(Token("Identifier", buff, lineNum));
                 buff.clear();
                 continue;
             } else {
@@ -225,15 +230,15 @@ void scan(std::string text){
         } 
 
         if(is_parenthesis(c)){
-            Tokens.push_back(Token(get_parenthesis_type(std::string(1, c)), std::string(1, c)));
+            Tokens.push_back(Token(get_parenthesis_type(std::string(1, c)), std::string(1, c), lineNum));
             continue;
         }
 
         if(is_misc(std::string(1, c)) || is_misc(std::string(1, c) + std::string(1, in.peek()))){
             if(is_misc(std::string(1, c) + std::string(1, in.peek()))){
-                Tokens.push_back(Token("Misc", std::string(1, c) + std::string(1, in.peek())));
+                Tokens.push_back(Token("Misc", std::string(1, c) + std::string(1, in.peek()), lineNum));
             } else {
-                Tokens.push_back(Token("Misc", std::string(1, c)));
+                Tokens.push_back(Token("Misc", std::string(1, c), lineNum));
             }
             buff.clear();
             in.get();
@@ -252,7 +257,7 @@ void scan(std::string text){
                         buff+=c;
                         c = in.get();
                     }
-                    Tokens.push_back(Token("String Literal", buff+=c));
+                    Tokens.push_back(Token("String Literal", buff+=c, lineNum));
                     buff.clear();
                     continue;
                 }
@@ -260,7 +265,7 @@ void scan(std::string text){
                     buff+=c;
                     c = in.get();
                 }
-                Tokens.push_back(Token("Literal", buff+=c));
+                Tokens.push_back(Token("Literal", buff+=c, lineNum));
                 buff.clear();
                 continue;
             }
@@ -269,7 +274,7 @@ void scan(std::string text){
                     buff+=c;
                     c = in.get();
                 }
-                Tokens.push_back(Token("Comment", buff+=c));
+                Tokens.push_back(Token("Comment", buff+=c, lineNum));
                 buff.clear();
                 continue;
             } 
@@ -278,7 +283,7 @@ void scan(std::string text){
                     buff+=c;
                     c = in.get();
                 }
-                Tokens.push_back(Token("Literal", buff+=c));
+                Tokens.push_back(Token("Literal", buff+=c, lineNum));
                 buff.clear();
                 continue;
             }
@@ -288,7 +293,7 @@ void scan(std::string text){
                     buff+=c;
                     c = in.get();
                 }
-                Tokens.push_back(Token("Literal", buff+=c));
+                Tokens.push_back(Token("Literal", buff+=c, lineNum));
                 buff.clear();
                 continue;
             }
@@ -305,10 +310,10 @@ void scan(std::string text){
         //so we dont process say the = at the end of <= individually
         if(is_operator(std::string(1, c)) || is_operator(std::string(1, c) + std::string(1, in.peek()))){
             if(is_operator(std::string(1, c) + std::string(1, in.peek()))){
-                Tokens.push_back(Token(operator_type(std::string(1, c) + std::string(1, in.peek())), std::string(1, c) + std::string(1, in.peek())));
+                Tokens.push_back(Token(operator_type(std::string(1, c) + std::string(1, in.peek())), std::string(1, c) + std::string(1, in.peek()), lineNum));
                 in.get();
             } else{
-                Tokens.push_back(Token(operator_type(std::string(1, c)), std::string(1, c)));
+                Tokens.push_back(Token(operator_type(std::string(1, c)), std::string(1, c), lineNum));
             }
             buff.clear();
             continue;
@@ -320,13 +325,13 @@ void scan(std::string text){
 void init_sym(){
     for(int i = 0; i < Tokens.size(); i++){
         if(Tokens[i].get_type() == "Keyword" && Tokens[i+2].get_type() == "Assignment Operator"){
-            sym_table[Tokens[i+1].get_val()] = Symbol(Tokens[i].get_val(), "main", Tokens[i+3].get_val(), 0);
+            sym_table[Tokens[i+1].get_val()] = Symbol(Tokens[i].get_val(), "main", Tokens[i+3].get_val(), Tokens[i].get_lineNum());
         }
     }
 }
 
 void tester(){
-    //std::vector<std::string> tests = {"full_test.txt", "if_statement_test.txt"};
+    // std::vector<std::string> tests = {"if_statement_test.txt"};
     std::vector<std::string> tests = {"array_test.txt", "full_test.txt", "if_statement_test.txt", "keyword_test.txt", "loop_test.txt", "print_test.txt", "program.txt"};
     for(int i = 0; i < tests.size(); i++){
         std::cout << std::endl << "-----------------------THIS IS TEST " << i+1 << ": " << tests[i] << "-----------------------" << std::endl;

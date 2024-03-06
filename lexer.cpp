@@ -204,9 +204,20 @@ void scan(std::string text){
         //checks if we found a keyword, if the keyword is complete and there is a space in the next
         //in, we know that it is a complete keyword and not an identifier
         if(is_keyword(buff) && isspace(c)){
+            std::string temp = buff;
             Tokens.push_back(Token("Keyword", buff, lineNum));
             buff.clear();
-            continue;
+            if(temp == "return"){
+                while(in.peek() != ';' && c != in.eof()){
+                    buff+=c;
+                    c = in.get();
+                }
+                Tokens.push_back(Token("Literal", buff+=c, lineNum));
+                buff.clear();
+                continue;          
+            } else {
+                continue;
+            }
         }
 
         //special case when we want to find an identifier, we check if its not empty and if so we assume that it is
@@ -246,7 +257,7 @@ void scan(std::string text){
         }
         //checking if literal, we know if the most recent token is an assignment operator, then the next thing that isnt
         //a space will be a literal assignment, so we use this if statment to assign literals
-        if(!Tokens.empty()){
+        if(!Tokens.empty() && is_operator(Tokens[Tokens.size()-1].get_val())){
             bool temp = true;
             std::string curr_toke = Tokens[Tokens.size()-1].get_val();
             if(is_operator(curr_toke) || get_parenthesis_type(curr_toke) != ""){
@@ -331,8 +342,8 @@ void init_sym(){
 }
 
 void tester(){
-    // std::vector<std::string> tests = {"if_statement_test.txt"};
-    std::vector<std::string> tests = {"array_test.txt", "full_test.txt", "if_statement_test.txt", "keyword_test.txt", "loop_test.txt", "print_test.txt", "program.txt"};
+    std::vector<std::string> tests = {"loop_test.txt"};
+    // std::vector<std::string> tests = {"array_test.txt", "full_test.txt", "if_statement_test.txt", "keyword_test.txt", "loop_test.txt", "print_test.txt", "program.txt"};
     for(int i = 0; i < tests.size(); i++){
         std::cout << std::endl << "-----------------------THIS IS TEST " << i+1 << ": " << tests[i] << "-----------------------" << std::endl;
         std::string path = "tests/";
@@ -358,22 +369,5 @@ void tester(){
 
 
 int main(){
-    // std::string test = "full_test.txt";
-    // scan(test);
-
     tester();
-
-    //print out the contents of the map to make sure eveything is lexed
-
-    // for (int i = 0; i < Tokens.size(); i++) {
-    //     std::cout << Tokens[i] << std::endl;
-    // }
-
-    // init_sym();
-
-    // std::cout << std::endl << "------------Symbol Table------------" << std::endl << std::endl;
-
-    // for (auto i = sym_table.begin(); i != sym_table.end(); i++) {
-    //     std::cout << i->first << " : "<< i->second << std::endl;
-    // }
 }

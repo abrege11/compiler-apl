@@ -1,144 +1,137 @@
 ### Documentation
 
 ## 1.00 - All valid inputs
-<br> Types: integer, double, boolean, string, character, array
-<br> Operators: +, -, *, /, %, &&, ||, !, =, !=, ==, <, <=, >, >=
-<br> Misc: //, ;
-<br> Statments/Loops: if, elif, else, while, for, return, print()
+<br> **Types**: `integer`, `double`, `boolean`, `string`, `character`, `array`
+<br> **Operators**: `+`, `-`, `*`, `/`, `%`, `&&`, `||`, `!`, `=`, `!=`, `==`, `<`, `<=`, `>`, `>=`
+<br> **Misc**: `//`, `;`
+<br> **Statments/Loops**: `if`, `elif`, `else`, `while`, `for`, `return`, `print()`
 
 
 
 ## 1.01 - Declarations:
 <br> `<type> <var> = <val>;`
-<br><br> integer i = 1;
-<br>double d = 1.1;
-<br>boolean b = True; | False;
-<br>string s = "this is a string";
-<br>character c = 'c';
-<br>array arr = [val1, val2, val3];
+<br><br>-  `integer i = 1;`
+<br>- `double d = 1.1;`
+<br>- `boolean b = True; | False;`
+<br>- `string s = "this is a string";`
+<br>- `character c = 'c';`
+<br>- `array arr = [val1, val2, val3];`
 <br>
 
 ## 1.02 - Token Types:
-<br> Identifier:
- <br>  &nbsp; &nbsp; &nbsp; &nbsp;variable names, function names
-    Keyword:
-        keywords with special function in langauge (for, if, while)
-    Numeric Literal:
-        numeric values (ints, doubles)
-    String Literal:
-        data enclosed in quoates ""
-    Boolean Literal:
-        True or False
-    Character Literal:
-        single characters ('a', 'b', '1', '2')
-    Operators:
-        Arithmetic:
-            addition: +
-            subtraction: -
-            division: /
-            multiplication: *
-            modulus: %
-        Rational:
-            less than: <
-            less than or equal to: <=
-            greater than: >
-            greater than or equal to: >=
-            equal to: ==
-            not equal to: != 
-        Assignment:
-            assign to: = 
-        Logical:
-            logical and: &&
-            logical or: ||
-            logical not: !
-    Punctuation:
-        commas (,) and semicolons (;)
-    Comments:
-        anything after //
-    Whitespace:
-        spaces, tabs, newlines
-    EOF:
-        indication of end of source file
+**Identifier**: `variable names`, `function names` <br><br>
+**Keyword**: Keywords with special function in langauge (`for`, `if`, `while`) <br><br>
+**Numeric Literal**: Numeric values (`ints`, `doubles`)<br><br>
+**String Literal**: Data enclosed in quotes `" "` <br><br>
+**Boolean Literal**: `True` or `False`<br><br>
+**Character Literal**: Single characters (`'a'`, `'b'`, `'1'`, `'2'`)<br><br>
+**Punctuation**: Commas `,` and semicolons `;`<br><br>
+**Comments**: Anything on the same line and proceeding `//`<br><br>
+**Whitespace**: `spaces`, `tabs`, `newlines`<br><br>
+**EOF**: indication of end of source file<br><br>
+
+
+### Operators:
+- Arithmetic:
+    - addition: +
+    - subtraction: -
+    - division: /
+    - multiplication: *
+    - modulus: %
+- Rational:
+    - less than: <
+    - less than or equal to: <=
+    - greater than: >
+    - greater than or equal to: >=
+    - equal to: ==
+    - not equal to: != 
+- Assignment:
+    - assign to: = 
+- Logical:
+    - logical and: &&
+    - logical or: ||
+    - logical not: ! <br>
 
 
 
-1.03 :
-    <program> ::= <statement_list>
+1.03 : <br>
 
-    <statement_list> ::= <statement> <statement_list>
+::= <statement_list>
 
-    <statement> ::= <declaration>
-                | <assignment>
-                | <if_statement>
-                | <while_loop>
-                | <for_loop>
-                | <return_statement>
-                | <print_statement>
-                | ';'
+- <statement_list> ::= <statement> <statement_list>
 
-    <declaration> ::= <type> <identifier> '=' <expression> ';'
+<statement> ::= <declaration>
+            | <assignment>
+            | <if_statement>
+            | <while_loop>
+            | <for_loop>
+            | <return_statement>
+            | <print_statement>
+            | ';'
 
-    <assignment> ::= <identifier> '=' <expression> ';'
+<declaration> ::= <type> <identifier> '=' <expression> ';'
 
-    <if_statement> ::= 'if' '(' <expression> ')' '{' <statement_list> '}' 
-                | 'if' '(' <expression> ')' '{' <statement_list> '}' 'else' '{' <statement_list> '}'
-                | 'if' '(' <expression> ')' '{' <statement_list> '}' 'elif' '(' <expression> ')' '{' <statement_list> '}'
+<assignment> ::= <identifier> '=' <expression> ';'
 
-    <while_loop> ::= 'while' '(' <expression> ')' '{' <statement_list> '}'
+<if_statement> ::= 'if' '(' <expression> ')' '{' <statement_list> '}' 
+            | 'if' '(' <expression> ')' '{' <statement_list> '}' 'else' '{' <statement_list> '}'
+            | 'if' '(' <expression> ')' '{' <statement_list> '}' 'elif' '(' <expression> ')' '{' <statement_list> '}'
 
-    <for_loop> ::= 'for' '(' <declaration> ';' <expression> ';' <assignment> ')' '{' <statement_list> '}'
+<while_loop> ::= 'while' '(' <expression> ')' '{' <statement_list> '}'
 
-    <return_statement> ::= 'return' <expression> ';'
+<for_loop> ::= 'for' '(' <declaration> ';' <expression> ';' <assignment> ')' '{' <statement_list> '}'
 
-    <print_statement> ::= 'print' '(' <expression> ')' ';'
+<return_statement> ::= 'return' <expression> ';'
 
-    <expression> ::= <logical_or>
+<print_statement> ::= 'print' '(' <expression> ')' ';'
 
-    <logical_or> ::= <logical_and> ('||' <logical_and>)*
+<expression> ::= <logical_or>
 
-    <logical_and> ::= <equality> ('&&' <equality>)*
+<logical_or> ::= <logical_and> ('||' <logical_and>)*
 
-    <equality> ::= <relational> (('==' | '!=') <relational>)*
+<logical_and> ::= <equality> ('&&' <equality>)*
 
-    <relational> ::= <additive> (('>' | '<' | '>=' | '<=') <additive>)*
+<equality> ::= <relational> (('==' | '!=') <relational>)*
 
-    <additive> ::= <multiplicative> (('+' | '-') <multiplicative>)*
+<relational> ::= <additive> (('>' | '<' | '>=' | '<=') <additive>)*
 
-    <multiplicative> ::= <unary> (('*' | '/' | '%') <unary>)*
+<additive> ::= <multiplicative> (('+' | '-') <multiplicative>)*
 
-    <unary> ::= ('+' | '-' | '!') <primary>
+<multiplicative> ::= <unary> (('*' | '/' | '%') <unary>)*
 
-    <primary> ::= <identifier>
-            | <numeric_literal>
-            | <string_literal>
-            | <boolean_literal>
-            | <character_literal>
-            | '(' <expression> ')'
-            | <array_literal>
+<unary> ::= ('+' | '-' | '!') <primary>
 
-    <array_literal> ::= '[' <expression> (',' <expression>)* ']'
+<primary> ::= <identifier>
+        | <numeric_literal>
+        | <string_literal>
+        | <boolean_literal>
+        | <character_literal>
+        | '(' <expression> ')'
+        | <array_literal>
 
-    <type> ::= 'integer' | 'double' | 'boolean' | 'string' | 'character' | 'array'
+<array_literal> ::= '[' <expression> (',' <expression>)* ']'
 
-    <identifier> ::= <letter> (<letter> | <digit>)*
+<type> ::= 'integer' | 'double' | 'boolean' | 'string' | 'character' | 'array'
 
-    <numeric_literal> ::= <integer_literal> | <double_literal>
+<identifier> ::= <letter> (<letter> | <digit>)*
 
-    <integer_literal> ::= <digit>+
+<numeric_literal> ::= <integer_literal> | <double_literal>
 
-    <double_literal> ::= <digit>+ '.' <digit>+
+<integer_literal> ::= <digit>+
 
-    <string_literal> ::= '"' <any_character>* '"'
+<double_literal> ::= <digit>+ '.' <digit>+
 
-    <boolean_literal> ::= 'True' | 'False'
+<string_literal> ::= '"' <any_character>* '"'
 
-    <any_character> ::= <letter> | <digit> | <special_character>
+<boolean_literal> ::= 'True' | 'False'
 
-    <letter> ::= 'a' | 'b' | ... | 'z' | 'A' | 'B' | ... | 'Z'
+<any_character> ::= <letter> | <digit> | <special_character>
 
-    <digit> ::= '0' | '1' | ... | '9'
+<letter> ::= 'a' | 'b' | ... | 'z' | 'A' | 'B' | ... | 'Z'
 
-    <special_character> ::= any printable ASCII character except letters and digits
+<digit> ::= '0' | '1' | ... | '9'
+
+<special_character> ::= any printable ASCII character except letters and digits
 
 
 

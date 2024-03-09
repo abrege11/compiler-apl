@@ -201,6 +201,18 @@ void scan(std::string text){
             buff.clear();
             continue;
         }
+        if(std::string(1, c) == "\""){
+            buff+=c;
+            c = in.get();
+            while(std::string(1, c) != "\""){
+                buff+=c;
+                c = in.get();
+            }
+            buff+=c;
+            Tokens.push_back(Token("Literal", buff, lineNum));
+            buff.clear();
+            continue;
+        }
         //checks if we found a keyword, if the keyword is complete and there is a space in the next
         //in, we know that it is a complete keyword and not an identifier
         if(is_keyword(buff) && isspace(c)){
@@ -342,7 +354,7 @@ void init_sym(){
 }
 
 void tester(){
-    std::vector<std::string> tests = {"loop_test.txt"};
+    std::vector<std::string> tests = {"print_test.txt"};
     // std::vector<std::string> tests = {"array_test.txt", "full_test.txt", "if_statement_test.txt", "keyword_test.txt", "loop_test.txt", "print_test.txt", "program.txt"};
     for(int i = 0; i < tests.size(); i++){
         std::cout << std::endl << "-----------------------THIS IS TEST " << i+1 << ": " << tests[i] << "-----------------------" << std::endl;

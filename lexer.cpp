@@ -253,6 +253,15 @@ void scan(std::string text){
         } 
 
         if(is_parenthesis(c)){
+            if(c == '[' && isdigit(in.peek())){
+                Tokens.push_back(Token(get_parenthesis_type(std::string(1, c)), std::string(1, c), lineNum));
+                c = in.get();
+                while(c != ']'){
+                    buff+=c;
+                    c=in.get();
+                }
+                Tokens.push_back(Token("Literal", buff, lineNum));
+            }
             Tokens.push_back(Token(get_parenthesis_type(std::string(1, c)), std::string(1, c), lineNum));
             continue;
         }
@@ -310,16 +319,6 @@ void scan(std::string text){
                 buff.clear();
                 continue;
             }
-            if(curr_toke == "[" || curr_toke == ","){
-                char p = in.peek();
-                while(p != ',' && p != ']'){
-                    buff+=c;
-                    c = in.get();
-                }
-                Tokens.push_back(Token("Literal", buff+=c, lineNum));
-                buff.clear();
-                continue;
-            }
         }
         
         //if its alphanum we assume its a keyword, boolean, or identifier of some sort so we just add it
@@ -354,7 +353,7 @@ void init_sym(){
 }
 
 void tester(){
-    std::vector<std::string> tests = {"print_test.txt"};
+    std::vector<std::string> tests = {"full_test.txt"};
     // std::vector<std::string> tests = {"array_test.txt", "full_test.txt", "if_statement_test.txt", "keyword_test.txt", "loop_test.txt", "print_test.txt", "program.txt"};
     for(int i = 0; i < tests.size(); i++){
         std::cout << std::endl << "-----------------------THIS IS TEST " << i+1 << ": " << tests[i] << "-----------------------" << std::endl;

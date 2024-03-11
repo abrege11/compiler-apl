@@ -1,1 +1,1 @@
-array string arr = [1, 2, 3, 4];
+array string arr = [10];

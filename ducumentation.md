@@ -15,7 +15,7 @@
 <br>- `boolean b = True; | False;`
 <br>- `string s = "this is a string";`
 <br>- `character c = 'c';`
-<br>- `array arr = [val1, val2, val3];`
+<br>- `array arr = [integer];`
 <br>
 
 ## 1.02 - Token Types:

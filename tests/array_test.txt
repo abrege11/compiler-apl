@@ -1,1 +1,5 @@
+arr = ["this", "is", "a", "test", "array"];
 array string arr = [10];
+arr = [true, false, true, false];
+arr = ["this", "is", "a", "test", "array"];
+arr = [1, 2, 3, 4, 5];

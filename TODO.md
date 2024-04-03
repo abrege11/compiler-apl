@@ -9,6 +9,6 @@
 - [x] Tokenize Statements
 - [x]Tokenize literals in print statements
 - [x] Tokenize misc items
-- Tokenize array items
+- [x]Tokenize array items
 - End of file check
 - Optimize

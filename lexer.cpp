@@ -251,21 +251,33 @@ void scan(std::string text){
                 continue;
             }
         } 
-
+        //lexing the contents of an array
         if(is_parenthesis(c)){
-            if(c == '[' && isdigit(in.peek())){
+            if(c == '[' && isalnum(in.peek())){
                 Tokens.push_back(Token(get_parenthesis_type(std::string(1, c)), std::string(1, c), lineNum));
                 c = in.get();
                 while(c != ']'){
-                    buff+=c;
-                    c=in.get();
+                    if(c != ','){
+                        buff+=c;
+                        c=in.get();
+                    } else if(c == ',' || ']'){
+                        Tokens.push_back(Token("Literal", buff, lineNum));
+                        Tokens.push_back(Token("Misc", std::string(1, c), lineNum));
+                        buff.clear();
+                        c=in.get();
+                    }
                 }
-                Tokens.push_back(Token("Literal", buff, lineNum));
+            } else if(c == ']'){
+                Tokens.push_back(Token(get_parenthesis_type(std::string(1, c)), std::string(1, c), lineNum));
+                buff.clear();
+                continue; 
             }
+            Tokens.push_back(Token("Literal", buff, lineNum));
             Tokens.push_back(Token(get_parenthesis_type(std::string(1, c)), std::string(1, c), lineNum));
+            buff.clear();
             continue;
         }
-
+        
         if(is_misc(std::string(1, c)) || is_misc(std::string(1, c) + std::string(1, in.peek()))){
             if(is_misc(std::string(1, c) + std::string(1, in.peek()))){
                 Tokens.push_back(Token("Misc", std::string(1, c) + std::string(1, in.peek()), lineNum));
@@ -353,7 +365,7 @@ void init_sym(){
 }
 
 void tester(){
-    std::vector<std::string> tests = {"full_test.txt"};
+    std::vector<std::string> tests = {"array_test.txt"};
     // std::vector<std::string> tests = {"array_test.txt", "full_test.txt", "if_statement_test.txt", "keyword_test.txt", "loop_test.txt", "print_test.txt", "program.txt"};
     for(int i = 0; i < tests.size(); i++){
         std::cout << std::endl << "-----------------------THIS IS TEST " << i+1 << ": " << tests[i] << "-----------------------" << std::endl;

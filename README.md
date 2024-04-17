@@ -64,71 +64,63 @@ This is a very ambitious project that I started in December of 2023 over winter 
 ## 1.04 - APL Grammar | BNF Notation
 `<program>` ::= `<statement>` | `<program>` `<statement>` 
 
-<statement> ::= <declaration> | <assignment> | <if_statement> | <while_loop> | <for_loop> | <return_statement> | <print_statement> \
+`<statement>` ::= `<declaration>` | `<assignment>` | `<if_statement>` | `<while_loop>` | `<for_loop>` | `<return_statement>` | `<print_statement>` 
 
-<declaration> ::= <type> <identifier> '=' <value> ';' \
+`<declaration>` ::= `<type>` `<identifier>` '=' `<value>` ';' 
 
-<assignment> ::= <identifier> '=' <expression> ';' \
+`<assignment>` ::= `<identifier>` '=' `<expression>` ';' 
 
-<if_statement> ::= 'if' '(' <expression> ')' '{' <program> '}' <elif_statement> <else_statement> \
+`<if_statement>` ::= 'if' '(' `<expression>` ')' '{' `<program>` '}' `<elif_statement>` `<else_statement>`
 
-<elif_statement> ::= 'elif' '(' <expression> ')' '{' <program> '}' <elif_statement> | ε \
+`<elif_statement>` ::= 'elif' '(' `<expression>` ')' '{' `<program>` '}' `<elif_statement>`
 
-<else_statement> ::= 'else' '{' <program> '}' | ε \
+`<else_statement>` ::= 'else' '{' `<program>` '}'
 
-<while_loop> ::= 'while' '(' <expression> ')' '{' <program> '}' \
+`<while_loop>` ::= 'while' '(' `<expression>` ')' '{' `<program>` '}' 
 
-<for_loop> ::= 'for' '(' <assignment> ';' <expression> ';' <assignment> ')' '{' <program> '}' \
+`<for_loop>` ::= 'for' '(' `<assignment>` ';' `<expression>` ';' `<assignment>` ')' '{' `<program>` '}' 
 
-<return_statement> ::= 'return' <expression> ';' \
+`<return_statement>` ::= 'return' `<expression>` ';' 
 
-<print_statement> ::= 'print' '(' <expression> ')' ';' \
+`<print_statement>` ::= 'print' '(' `<expression>` ')' ';' 
 
-<expression> ::= <logical_expression> \
+`<expression>` ::= `<logical_expression>` 
 
-<logical_expression> ::= <logical_term> | <logical_expression> '&&' <logical_term> | <logical_expression> '||' <logical_term> \
+`<logical_expression>` ::= `<logical_term>` | `<logical_expression>` '&&' `<logical_term>` | `<logical_expression>` '||' `<logical_term>` 
 
-<logical_term> ::= <comparison> | '!' <logical_term> \
+`<logical_term>` ::= `<comparison>` | '!' `<logical_term>`
 
-<comparison> ::= <arithmetic_expression> <comparison_operator> <arithmetic_expression> \
+`<comparison>` ::= `<arithmetic_expression>` `<comparison_operator>` `<arithmetic_expression>` 
 
-<arithmetic_expression> ::= <term> | <arithmetic_expression> '+' <term> | <arithmetic_expression> '-' <term> \
+`<value>` ::= `<numeric_literal>` | `<string_literal>` | `<boolean_literal>` | `<character_literal>` | `<identifier>` | `<array_literal>`
 
-<term> ::= <factor> | <term> '*' <factor> | <term> '/' <factor> | <term> '%' <factor> \
+`<array_literal>` ::= `[ <type> ]` 
 
-<factor> ::= <value> | '(' <expression> ')' \
+`<type>` ::= 'integer' | 'double' | 'boolean' | 'string' | 'character' | 'array' 
 
-<value> ::= <numeric_literal> | <string_literal> | <boolean_literal> | <character_literal> | <identifier> | <array_literal> \
+`<identifier>` ::= `<variable_name>` | `<function_name>`
 
-<array_literal> ::= '[' <type> ']' \
+`<comparison_operator>` ::= '==' | '!=' | '<' | '<=' | '>' | '>='
 
-<type> ::= 'integer' | 'double' | 'boolean' | 'string' | 'character' | 'array' \
+`<numeric_literal>` ::= `<integer_literal>`
 
-<identifier> ::= <variable_name> | <function_name> \
+`<integer_literal>` ::= [0-9]
 
-<comparison_operator> ::= '==' | '!=' | '<' | '<=' | '>' | '>=' \
+`<string_literal>` ::= '"' `<string_characters>` '"' 
 
-<numeric_literal> ::= <integer_literal> | <double_literal> \
+`<boolean_literal>` ::= 'True' | 'False' 
 
-<integer_literal> ::= [0-9]+ \
+`<character_literal>` ::= '\'' <character> '\'' 
 
-<double_literal> ::= [0-9]+ '.' [0-9]+ \
+`<string_characters>` ::= `<string_character>` | `<string_characters>` `<string_character>` 
 
-<string_literal> ::= '"' <string_characters> '"' \
+`<string_character>` ::= `<any_character_except_double_quote>`
 
-<boolean_literal> ::= 'True' | 'False' \
+`<variable_name>` ::= `<alphabetic_character>` | `<variable_name>` `<alphabetic_character>` | `<variable_name>` `<numeric_character>`
 
-<character_literal> ::= '\'' <character> '\'' \
+`<function_name>` ::= `<alphabetic_character>` `<alphabetic_character>` | `<function_name>` `<alphabetic_character>` | `<function_name>` `<numeric_character>` 
 
-<string_characters> ::= <string_character> | <string_characters> <string_character> \
+`<alphabetic_character>` ::= [a-zA-Z]
 
-<string_character> ::= <any_character_except_double_quote> \
-
-<variable_name> ::= <alphabetic_character> | <variable_name> <alphabetic_character> | <variable_name> <numeric_character> \
-
-<function_name> ::= <alphabetic_character> <alphabetic_character> | <function_name> <alphabetic_character> | <function_name> <numeric_character> \
-
-<alphabetic_character> ::= [a-zA-Z] \
-
-<numeric_character> ::= [0-9] \
+`<numeric_character>` ::= [0-9]
 

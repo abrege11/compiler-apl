@@ -62,7 +62,7 @@ This is a very ambitious project that I started in December of 2023 over winter 
 
 
 ## 1.04 - APL Grammar | BNF Notation
-`<program>` ::= `<statement>` | `<program>` `<statement>` <br>
+`<program>` ::= `<statement>` <br>| `<program>` `<statement>` <br>
 
 `<statement>` ::= `<declaration>` | `<assignment>` | `<if_statement>` | `<while_loop>` | `<for_loop>` | `<return_statement>` | `<print_statement>` 
 

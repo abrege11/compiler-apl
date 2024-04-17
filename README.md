@@ -1,7 +1,7 @@
-&nbsp# Abe's Programming Language (APL)
+&nbsp# Abes Programming Language (APL)
 This is my senior project, I plan on creating a simple compiler that will later be used to write another compiler. 
 
-This is a very ambitious project that I started in December of 2023 over winter break of my junior year of university at NMU (Northern Michigan University). I completed the first version of the lexer in about a month with research factored in, and I haven't been able to work on much more up to now, Feb 16. due to a large course load. I hope to be able to expand this project little by little as the semester goes on.
+This is a very ambitious project that I started in December of 2023 over winter break of my junior year of university at NMU (Northern Michigan University). I completed the first version of the lexer in about a month with research factored in, and I havent been able to work on much more up to now, Feb 16. due to a large course load. I hope to be able to expand this project little by little as the semester goes on.
 
 <br>
 
@@ -21,7 +21,7 @@ This is a very ambitious project that I started in December of 2023 over winter 
 <br>- `double d = 1.1;`
 <br>- `boolean b = True; | False;`
 <br>- `string s = "this is a string";`
-<br>- `character c = 'c';`
+<br>- `character c = c;`
 <br>- `array arr = [integer];`
 <br>
 
@@ -31,7 +31,7 @@ This is a very ambitious project that I started in December of 2023 over winter 
 **Numeric Literal**: Numeric values (`ints`, `doubles`)<br><br>
 **String Literal**: Data enclosed in quotes `" "` <br><br>
 **Boolean Literal**: `True` or `False`<br><br>
-**Character Literal**: Single characters (`'a'`, `'b'`, `'1'`, `'2'`)<br><br>
+**Character Literal**: Single characters (`a`, `b`, `1`, `2`)<br><br>
 **Punctuation**: Commas `,` and semicolons `;`<br><br>
 **Comments**: Anything on the same line and proceeding `//`<br><br>
 **Whitespace**: `spaces`, `tabs`, `newlines`<br><br>
@@ -62,33 +62,33 @@ This is a very ambitious project that I started in December of 2023 over winter 
 
 
 ## 1.04 - APL Grammar | BNF Notation
-`<program>` ::= `<statement>` <br>&nbsp;&nbsp;&nbsp;| `<program>` `<statement>` <br>
+`<program>` ::= `<statement>` | `<program>` `<statement>` <br>
 
 `<statement>` ::= `<declaration>` | `<assignment>` | `<if_statement>` | `<while_loop>` | `<for_loop>` | `<return_statement>` | `<print_statement>` 
 
-`<declaration>` ::= `<type>` `<identifier>` '=' `<value>` ';' 
+`<declaration>` ::= `<type>` `<identifier>` = `<value>` ; 
 
-`<assignment>` ::= `<identifier>` '=' `<expression>` ';' 
+`<assignment>` ::= `<identifier>` = `<expression>` ; 
 
-`<if_statement>` ::= 'if' '(' `<expression>` ')' '{' `<program>` '}' `<elif_statement>` `<else_statement>`
+`<if_statement>` ::= if ( `<expression>` ) { `<program>` } `<elif_statement>` `<else_statement>`
 
-`<elif_statement>` ::= 'elif' '(' `<expression>` ')' '{' `<program>` '}' `<elif_statement>`
+`<elif_statement>` ::= elif ( `<expression>` ) { `<program>` } `<elif_statement>`
 
-`<else_statement>` ::= 'else' '{' `<program>` '}'
+`<else_statement>` ::= else { `<program>` }
 
-`<while_loop>` ::= 'while' '(' `<expression>` ')' '{' `<program>` '}' 
+`<while_loop>` ::= while ( `<expression>` ) { `<program>` } 
 
-`<for_loop>` ::= 'for' '(' `<assignment>` ';' `<expression>` ';' `<assignment>` ')' '{' `<program>` '}' 
+`<for_loop>` ::= for ( `<assignment>` ; `<expression>` ; `<assignment>` ) { `<program>` } 
 
-`<return_statement>` ::= 'return' `<expression>` ';' 
+`<return_statement>` ::= return `<expression>` ; 
 
-`<print_statement>` ::= 'print' '(' `<expression>` ')' ';' 
+`<print_statement>` ::= print ( `<expression>` ) ; 
 
 `<expression>` ::= `<logical_expression>` 
 
-`<logical_expression>` ::= `<logical_term>` | `<logical_expression>` '&&' `<logical_term>` | `<logical_expression>` '||' `<logical_term>` 
+`<logical_expression>` ::= `<logical_term>` | `<logical_expression>` && `<logical_term>` | `<logical_expression>` || `<logical_term>` 
 
-`<logical_term>` ::= `<comparison>` | '!' `<logical_term>`
+`<logical_term>` ::= `<comparison>` | ! `<logical_term>`
 
 `<comparison>` ::= `<arithmetic_expression>` `<comparison_operator>` `<arithmetic_expression>` 
 
@@ -96,21 +96,21 @@ This is a very ambitious project that I started in December of 2023 over winter 
 
 `<array_literal>` ::= `[ <type> ]` 
 
-`<type>` ::= 'integer' | 'double' | 'boolean' | 'string' | 'character' | 'array' 
+`<type>` ::= integer | double | boolean | string | character | array 
 
 `<identifier>` ::= `<variable_name>` | `<function_name>`
 
-`<comparison_operator>` ::= '==' | '!=' | '<' | '<=' | '>' | '>='
+`<comparison_operator>` ::= == | != | < | <= | > | >=
 
 `<numeric_literal>` ::= `<integer_literal>`
 
 `<integer_literal>` ::= [0-9]
 
-`<string_literal>` ::= '"' `<string_characters>` '"' 
+`<string_literal>` ::= " `<string_characters>` " 
 
-`<boolean_literal>` ::= 'True' | 'False' 
+`<boolean_literal>` ::= True | False 
 
-`<character_literal>` ::= '\'' <character> '\'' 
+`<character_literal>` ::= \ <character> \ 
 
 `<string_characters>` ::= `<string_character>` | `<string_characters>` `<string_character>` 
 

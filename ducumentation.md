@@ -1,4 +1,4 @@
-### Documentation
+# APL - Documentation
 
 ## 1.00 - All valid inputs
 <br> **Types**: `integer`, `double`, `boolean`, `string`, `character`, `array`

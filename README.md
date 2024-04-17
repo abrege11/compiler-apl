@@ -62,13 +62,13 @@ This is a very ambitious project that I started in December of 2023 over winter 
 
 
 ## 1.04 - APL Grammar | BNF Notation
-`<program>` ::= `<statement>` | `<program>` `<statement>` <br>
+`<program>` ::= `<statement>` | `<program>` `<statement>`
 
 `<statement>` ::= `<declaration>` | `<assignment>` | `<if_statement>` | `<while_loop>` | `<for_loop>` | `<return_statement>` | `<print_statement>` 
 
 `<declaration>` ::= `<type>` `<identifier>` = `<value>` ; 
 
-`<assignment>` ::= `<identifier>` = `<expression>` ; 
+`<assignment>` ::= `<identifier>` = `<expression>` | `<value>` ; 
 
 `<if_statement>` ::= if ( `<expression>` ) { `<program>` } `<elif_statement>` `<else_statement>`
 
@@ -82,7 +82,7 @@ This is a very ambitious project that I started in December of 2023 over winter 
 
 `<return_statement>` ::= return `<expression>` ; 
 
-`<print_statement>` ::= print ( `<expression>` ) ; 
+`<print_statement>` ::= print ( `<expression>` | `<value>` ) ; 
 
 `<expression>` ::= `<logical_expression>` 
 
@@ -100,7 +100,7 @@ This is a very ambitious project that I started in December of 2023 over winter 
 
 `<identifier>` ::= `<variable_name>` | `<function_name>`
 
-`<comparison_operator>` ::= == | != | < | <= | > | >=
+`<comparison_operator>` ::= `==` | `!=` | `<` | `<=` | `>` | `>=`
 
 `<numeric_literal>` ::= `<integer_literal>`
 
@@ -110,7 +110,7 @@ This is a very ambitious project that I started in December of 2023 over winter 
 
 `<boolean_literal>` ::= True | False 
 
-`<character_literal>` ::= \ <character> \ 
+`<character_literal>` ::= `<character>` 
 
 `<string_characters>` ::= `<string_character>` | `<string_characters>` `<string_character>` 
 

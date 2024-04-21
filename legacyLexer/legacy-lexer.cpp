@@ -1,3 +1,7 @@
+/*
+THIS IS A LEGACY VERSION OF THE APL LEXER
+VERSION: 1
+*/
 #include <iostream>
 #include <fstream>
 #include <string>

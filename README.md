@@ -1,3 +1,5 @@
+RUN ```lexer.cpp```
+
 This is a small lexer built in C++ that has the ability to lex
 - Types
 - Functions
